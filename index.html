@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Vũ Hồng Hoàng | Full Stack Developer Portfolio</title>
+  <meta name="description" content="Portfolio of Vũ Hồng Hoàng, a Full Stack Developer specialized in React, Node.js, and high-performance web architecture. Explore my featured projects including SeatNow, EduQuery, and more." />
+  <style>
+    :root{
+      /* Fallbacks for older browsers */
+      --bg-base: #0f0d1a;
+      --panel-base: #1a1626;
+      --text-base: #f0f0f5;
+      --muted-base: #a0a0b0;
+      --brand-base: #7c4dff;
+      --brand2-base: #00e5ff;
+      --ok-base: #00e676;
+      --err-base: #ff5252;
+
+      /* Neutrals - tinted with brand hue (280) */
+      --bg: oklch(12% 0.01 280);
+      --panel: oklch(16% 0.015 280);
+      --panel2: oklch(14% 0.01 280);
+      --text: oklch(94% 0.005 280);
+      --muted: oklch(75% 0.01 280);
+      --line: rgba(255, 255, 255, 0.1);
+      
+      /* Accents - OKLCH for vibrancy */
+      --brand: oklch(55% 0.22 280); 
+      --brand2: oklch(75% 0.18 200); 
+      --ok: oklch(70% 0.18 150);
+      --err: oklch(65% 0.22 25);
+      
+      --shadow: 0 24px 80px -12px rgba(0,0,0,0.5);
+      --glow: 0 0 20px -5px var(--brand);
+      
+      --radius: 20px;
+      --container: 1120px;
+      
+      --fs-base: 1rem;
+      --fs-h1: clamp(2.5rem, 8vw, 5rem);
+      --fs-h2: clamp(1.75rem, 5vw, 3rem);
+      --fs-h3: 1.25rem;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *{box-sizing:border-box; margin:0; padding:0}
+    html{ scroll-behavior:smooth; scroll-snap-type: y mandatory }
+    body{
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-base);
+      background-color: var(--bg);
+      color: var(--text-base);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x:hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a{color:inherit; text-decoration:none; transition: .2s ease}
+    .container{
+      width: min(var(--container), 100% - 3rem);
+      margin-inline:auto;
+    }
+
+    /* Sidebar Layout */
+    .sidebar{
+      width: 300px;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      background: var(--panel-base);
+      background: oklch(14% 0.01 280 / 80%);
+      backdrop-filter: blur(24px);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+
+    .sidebar-brand{
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 5rem;
+    }
+    .sidebar-brand .logo{
+      width: 56px; height: 56px;
+      border-radius: 18px;
+      background: url('https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-1/656840801_2384814978703440_6245937344735420344_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=108&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeGi-DvczcU2-cjOzSm9CMyrE2t9ziAm8loTa33OICbyWmHsUpSTJoo7JPFXJDeKbKknAhEKdSrdWTkZcPHVh0Ij&_nc_ohc=1qGcreh7NCUQ7kNvwHyxq-U&_nc_oc=Adp2U2ltCQtspPfwasVrz0la8CYRN4uZeQgWu_BVZFXE1l82CJ2Y1BxRHgZXJgSwlr4vAkbLjYeJEXa1EsqwUHt8&_nc_zt=24&_nc_ht=scontent.fhan2-3.fna&_nc_gid=xBl9Qi1wmAbJIIyR_FLQ9Q&_nc_ss=7b2a8&oh=00_Af76NZZ7phV0VuRO0jFMIW2RaRlnf1N6uL-1u237lXFEQA&oe=6A0A451D') center/cover no-repeat;
+      box-shadow: 0 0 20px -5px var(--brand2);
+      border: 2px solid var(--brand2);
+      margin-bottom: 1rem;
+    }
+    .sidebar-brand strong{ font-size: 1.25rem; font-weight: 900; letter-spacing: -0.03em }
+    .sidebar-brand span{ font-size: 0.85rem; color: var(--muted); font-weight: 500 }
+    
+    .sidebar-nav{
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      position: relative;
+    }
+    
+    /* Progress Line */
+    .sidebar-nav::before{
+      content: "";
+      position: absolute;
+      left: 17px;
+      top: 1.5rem;
+      bottom: 1.5rem;
+      width: 1px;
+      background: var(--line);
+      z-index: 0;
+    }
+
+    .chapter-link{
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0.85rem;
+      border-radius: 14px;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .chapter-dot{
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      transition: all 0.4s var(--ease-out-expo);
+      flex-shrink: 0;
+    }
+
+    .chapter-link:hover{
+      color: var(--text);
+      background: oklch(100% 0 0 / 5%);
+    }
+
+    .chapter-link.active{
+      color: var(--text);
+      background: oklch(100% 0 0 / 8%);
+    }
+    
+    .chapter-link.active .chapter-dot{
+      background: var(--brand2);
+      border-color: var(--brand2);
+      color: var(--bg);
+      box-shadow: 0 0 20px var(--brand2);
+      transform: scale(1.1);
+    }
+
+    main{
+      margin-left: 300px;
+      width: calc(100% - 300px);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.4rem;
+      border-radius: 16px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      background: oklch(100% 0 0 / 5%);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn:hover{
+      background: oklch(100% 0 0 / 10%);
+      transform: translateY(-2px);
+      border-color: oklch(100% 0 0 / 20%);
+    }
+    .btn.primary{
+      background: var(--brand-base);
+      background: var(--brand);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      box-shadow: 0 12px 24px -8px rgba(124, 77, 255, 0.5);
+    }
+
+    @media (max-width: 1024px){
+      .sidebar{ 
+        position: fixed;
+        left: -100%;
+        width: 280px;
+        transition: left 0.4s var(--ease-out-expo);
+      }
+      .sidebar.open{ left: 0 }
+      main{ margin-left: 0; width: 100% }
+      
+      .hamburger{
+        display: flex;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 1000;
+        width: 48px; height: 48px;
+        border-radius: 14px;
+        background: #1a1626;
+        background: oklch(14% 0.01 280 / 80%);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.1);
+        align-items: center; justify-content: center;
+        color: var(--text-base);
+        color: var(--text);
+        cursor: pointer;
+      }
+      .sidebar-brand span, .chapter-label{ display: block }
+      .sidebar-nav::before{ left: 17px; transform: none }
+    }
+
+    /* Chapters */
+    section{
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      position: relative;
+    }
+    
+    .section-title{
+      margin-bottom: 4rem;
+      transform: translateY(0);
+      transition: all 0.8s var(--ease-out-expo);
+    }
+    section.active .section-title{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .chapter-num{
+      font-family: monospace;
+      color: var(--brand2);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .section-title h2{
+      font-size: var(--fs-h2);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+    .section-title p{
+      color: var(--muted);
+      font-size: 1.25rem;
+      max-width: 65ch;
+      line-height: 1.4;
+    }
+
+    /* Hero Chapter */
+    .hero{
+      padding: 0;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+      align-items: stretch;
+      transition: all 1.2s var(--ease-out-expo);
+    }
+    section.active .hero-grid{
+      opacity: 1;
+      transform: scale(1);
+    }
+    .card{
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #1a1626;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
+      background-color: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+    .card:hover{ border-color: oklch(100% 0 0 / 20%) }
+
+    .hero-main{
+      padding: 3rem;
+      position:relative;
+    }
+    .hero-main::after{
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0% 0%, oklch(55% 0.22 280 / 15%), transparent 50%);
+      pointer-events: none;
+    }
+    .hero-main > *{ position: relative; z-index: 1 }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap: 0.6rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 99px;
+      border: 1px solid var(--line);
+      background: oklch(100% 0 0 / 5%);
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .dot{
+      width: 8px; height: 8px; border-radius: 99px;
+      background: var(--ok);
+      box-shadow: 0 0 12px var(--ok);
+    }
+    h1{
+      margin: 1.5rem 0 1rem;
+      font-size: var(--fs-h1);
+      line-height: 1.1;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+    .lead{
+      margin-bottom: 2rem;
+      color: var(--muted);
+      font-size: 1.15rem;
+      line-height: 1.6;
+      max-width: 60ch;
+    }
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+      list-style:none;
+    }
+    .chip{
+      padding: 0.4rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: oklch(100% 0 0 / 4%);
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .hero-cta{
+      display:flex;
+      gap: 1rem;
+      flex-wrap:wrap;
+    }
+
+    .hero-side{
+      padding: 2rem;
+      display:flex;
+      flex-direction:column;
+      gap: 1.5rem;
+      justify-content: space-between;
+    }
+    .avatar{
+      display:flex;
+      align-items:center;
+      gap: 1.25rem;
+    }
+    .avatar .pic{
+      width: 80px; height: 80px; border-radius: 24px;
+      background: url('https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-1/656840801_2384814978703440_6245937344735420344_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=108&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeGi-DvczcU2-cjOzSm9CMyrE2t9ziAm8loTa33OICbyWmHsUpSTJoo7JPFXJDeKbKknAhEKdSrdWTkZcPHVh0Ij&_nc_ohc=1qGcreh7NCUQ7kNvwHyxq-U&_nc_oc=Adp2U2ltCQtspPfwasVrz0la8CYRN4uZeQgWu_BVZFXE1l82CJ2Y1BxRHgZXJgSwlr4vAkbLjYeJEXa1EsqwUHt8&_nc_zt=24&_nc_ht=scontent.fhan2-3.fna&_nc_gid=xBl9Qi1wmAbJIIyR_FLQ9Q&_nc_ss=7b2a8&oh=00_Af76NZZ7phV0VuRO0jFMIW2RaRlnf1N6uL-1u237lXFEQA&oe=6A0A451D') center/cover no-repeat;
+      border: 1px solid oklch(100% 0 0 / 20%);
+      box-shadow: 0 12px 32px -8px var(--brand);
+    }
+    .avatar .meta strong{ display:block; font-size: 1.2rem; font-weight: 800 }
+    .avatar .meta span{ display:block; color: var(--muted); font-size: 0.95rem }
+    
+    .stats{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    .stat{
+      padding: 1rem;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: oklch(100% 0 0 / 3%);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .stat strong{ font-size: 1.2rem; font-weight: 800; color: var(--brand2) }
+    .stat span{ color: var(--muted); font-size: 0.9rem; font-weight: 500 }
+    
+    .mini{
+      padding: 1.25rem;
+      border-radius: 16px;
+      background: oklch(var(--brand) / 5%);
+      border: 1px solid oklch(var(--brand) / 10%);
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .mini a{ color: var(--text); font-weight: 600; border-bottom: 1px solid oklch(var(--text) / 20%) }
+    .mini a:hover{ border-bottom-color: var(--text) }
+
+    /* Chapter Navigator */
+    .nav-indicator{
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .nav-dot{
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--line);
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+    }
+    .nav-dot::after{
+      content: attr(data-label);
+      position: absolute;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    .nav-dot:hover::after{ opacity: 1; transform: translateY(-50%) translateX(-0.5rem) }
+    .nav-dot.active{
+      background: var(--brand2);
+      border-color: var(--brand2);
+      transform: scale(1.5);
+      box-shadow: 0 0 15px var(--brand2);
+    }
+    .nav-dot.active::after{ opacity: 1; color: var(--text) }
+
+    /* Staggered Reveals */
+    .grid-2, .grid-3, .timeline, .contact{
+      transition: all 1s var(--ease-out-expo);
+    }
+    section.active .grid-2, 
+    section.active .grid-3, 
+    section.active .timeline, 
+    section.active .contact{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Grids */
+    .grid-2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .panel{
+      padding: 2rem;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #1a1626;
+      background: rgba(255, 255, 255, 0.02);
+      transition: all 0.3s ease;
+    }
+    .panel:hover{
+      background: oklch(100% 0 0 / 4%);
+      border-color: oklch(100% 0 0 / 15%);
+      transform: translateY(-2px);
+    }
+    .panel h3{
+      margin-bottom: 0.75rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .panel p{ margin-bottom: 1rem; color: var(--muted); font-size: 0.95rem; line-height: 1.6 }
+    .tags{ display:flex; flex-wrap:wrap; gap: 0.5rem; margin-top: 1.25rem }
+    .tag{
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      background: oklch(100% 0 0 / 5%);
+      padding: 0.3rem 0.7rem;
+      border-radius: 8px;
+    }
+
+    /* Timeline */
+    .timeline{
+      display:grid;
+      gap: 1.25rem;
+    }
+    .role{
+      padding: 2rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: oklch(100% 0 0 / 2%);
+      position: relative;
+    }
+    .role::before{
+      content: "";
+      position: absolute;
+      left: 0; top: 2rem; bottom: 2rem;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--brand), transparent);
+      border-radius: 0 99px 99px 0;
+      opacity: 0.5;
+    }
+    .role-head{
+      display:flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .role-head strong{ font-size: 1.2rem; font-weight: 700; color: var(--text) }
+    .role-head span{ color: var(--muted); font-size: 0.9rem; font-weight: 600; background: oklch(100% 0 0 / 5%); padding: 0.2rem 0.6rem; border-radius: 6px }
+    .bullets{ margin-top: 1rem; padding-left: 1.25rem; color: var(--muted); list-style: square }
+    .bullets li{ margin-bottom: 0.5rem; font-size: 0.95rem }
+
+    /* Contact */
+    .contact{
+      display:grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    .field{
+      display:flex; flex-direction:column; gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    label{ color: var(--text); font-size: 0.9rem; font-weight: 600 }
+    input, textarea{
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: oklch(0% 0 0 / 20%);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+    textarea{ min-height: 150px; resize: vertical }
+    input:focus, textarea:focus{
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 4px oklch(var(--brand) / 10%);
+      background: oklch(0% 0 0 / 30%);
+    }
+    .note{ color: var(--muted); font-size: 0.9rem; line-height: 1.5 }
+    .note.ok{ color: var(--ok); font-weight: 600 }
+    .note.err{ color: var(--err); font-weight: 600 }
+    .links{
+      display:flex; flex-wrap:wrap; gap: 0.75rem; margin-top: 1.5rem;
+    }
+
+    footer{
+      padding: 4rem 0;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      margin-top: 4rem;
+      font-size: 0.9rem;
+    }
+    .foot{
+      display:flex;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px){
+      .hero-grid{ grid-template-columns: 1fr }
+      .contact{ grid-template-columns: 1fr }
+    }
+    @media (max-width: 768px){
+      .grid-3, .grid-2{ grid-template-columns: 1fr }
+      .menu{ display:none }
+      .hamburger{ display:inline-flex; align-items:center; justify-content:center }
+      .nav{ padding: 0.75rem 0 }
+      .hero-main{ padding: 2rem }
+    }
+    @media (max-width: 480px){
+      .hero-cta .btn{ width: 100% }
+      .role-head{ flex-direction: column; gap: 0.5rem }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto !important; transition:none !important}
+    }
+    html{scroll-behavior:smooth}
+  </style>
+</head>
+<body>
+  <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h16M4 16h16"/></svg>
+  </button>
+
+  <aside class="sidebar" id="mobile-drawer">
+    <div class="sidebar-brand">
+      <div class="logo"></div>
+      <strong>Vũ Hồng Hoàng</strong>
+      <span>Full Stack Developer</span>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a href="#about" class="chapter-link active">
+        <div class="chapter-dot">01</div>
+        <span class="chapter-label">Introduction</span>
+      </a>
+      <a href="#experience" class="chapter-link">
+        <div class="chapter-dot">02</div>
+        <span class="chapter-label">The Journey</span>
+      </a>
+      <a href="#projects" class="chapter-link">
+        <div class="chapter-dot">03</div>
+        <span class="chapter-label">Featured Work</span>
+      </a>
+      <a href="#skills" class="chapter-link">
+        <div class="chapter-dot">04</div>
+        <span class="chapter-label">Technical Stack</span>
+      </a>
+      <a href="#contact" class="chapter-link">
+        <div class="chapter-dot">05</div>
+        <span class="chapter-label">Get in Touch</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main>
+    <section class="hero active" id="about">
+      <div class="container">
+        <div class="section-title">
+          <span class="chapter-num">01 / INTRODUCTION</span>
+          <h1>Vũ Hồng Hoàng — Full Stack Web Developer</h1>
+          <p class="lead">
+            I’m a fresh graduate based in Hanoi, preparing for a Full Stack Web internship.
+            I enjoy building end-to-end products: responsive UI, APIs, databases, and basic deployment.
+          </p>
+        </div>
+
+        <div class="hero-grid" style="margin-top: 2rem">
+          <div class="card hero-main" style="padding: 0; border: none; background: transparent">
+            <ul class="chips">
+              <li class="chip">Frontend: React / Next.js</li>
+              <li class="chip">Backend: Node.js / Express</li>
+              <li class="chip">DB: MySQL / MongoDB / SQL Server</li>
+            </ul>
+
+            <div class="hero-cta">
+              <a href="#projects" class="btn primary">Explore My Work</a>
+              <a href="#contact" class="btn">Get in Touch</a>
+            </div>
+          </div>
+
+          <aside class="card hero-side">
+            <div class="avatar">
+              <div class="pic"></div>
+              <div class="meta">
+                <strong>V.H. Hoàng</strong>
+                <span>@hoangvhgch220975</span>
+              </div>
+            </div>
+            <div class="stats">
+              <div class="stat"><span>Projects</span><strong>12+</strong></div>
+              <div class="stat"><span>Graduation</span><strong>2026</strong></div>
+              <div class="stat"><span>Focus</span><strong>Full Stack</strong></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section-title">
+          <span class="chapter-num">02 / THE JOURNEY</span>
+          <h2>Experience & Education</h2>
+          <p>My career is built on a foundation of continuous learning and architectural ownership.</p>
+        </div>
+
+        <div class="timeline">
+          <div class="role">
+            <div class="role-head">
+              <div>
+                <strong>Self-taught & Independent Developer</strong>
+                <div style="color:var(--muted); font-size:.92rem; margin-top:.15rem">Building projects with modern tech</div>
+              </div>
+              <span>2020 — Present</span>
+            </div>
+            <ul class="bullets">
+              <li>Mastered React, Next.js, and Node.js through end-to-end project delivery.</li>
+              <li>Implemented real-time features using Redis and WebSockets for scalable applications.</li>
+              <li>Focused on performance optimization and clean code principles.</li>
+            </ul>
+            <div class="tags">
+              <span class="tag">React</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">System Design</span>
+            </div>
+          </div>
+
+          <div class="role">
+            <div class="role-head">
+              <div>
+                <strong>Project-based Learning</strong>
+                <div style="color:var(--muted); font-size:.92rem; margin-top:.15rem">Greenwich University Academic Path</div>
+              </div>
+              <span>2022 — 2026</span>
+            </div>
+            <ul class="bullets">
+              <li>Academic focus on Data Structures, Algorithms, and Database Management.</li>
+              <li>Leading group projects using Scrum and Agile methodologies.</li>
+              <li>Maintaining a strong GPA while building a public portfolio.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-title">
+          <span class="chapter-num">03 / FEATURED WORK</span>
+          <h2>Projects</h2>
+          <p>A selection of end-to-end applications demonstrating full-stack proficiency.</p>
+        </div>
+
+        <div class="grid-2">
+          <article class="panel" style="grid-column: 1 / -1; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; align-items: center; background: linear-gradient(135deg, oklch(55% 0.22 280 / 10%), transparent);">
+            <div>
+              <div class="kicker" style="margin-bottom: 1rem">Flagship Platform</div>
+              <h3>SeatNow Platform</h3>
+              <p>A comprehensive restaurant reservation system featuring real-time table management, AI-driven customer insights, and a high-performance dashboard.</p>
+              <div class="tags">
+                <span class="tag">React / Vite</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">Redis / Socket.io</span>
+                <span class="tag">MSSQL</span>
+              </div>
+              <div class="links" style="margin-top: 1.5rem">
+                <a class="btn primary" href="https://github.com/hoangvhgch220975/SeatNow-Platform" target="_blank" rel="noreferrer">View Repository</a>
+              </div>
+            </div>
+            <div style="background: oklch(100% 0 0 / 5%); aspect-ratio: 16/10; border-radius: 12px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; overflow: hidden">
+              <img src="https://github.com/hoangvhgch220975/SeatNow-Platform/blob/main/Final%20Project%20FE/frontend/src/assets/logos/logo.png?raw=true" alt="SeatNow Logo" style="max-width: 60%; height: auto; filter: drop-shadow(0 0 20px var(--brand2))">
+            </div>
+          </article>
+
+          <article class="panel">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem">
+              <img src="https://github.com/hoangvhgch220975/ShortenURL/blob/main/FE/URL-Shorten-FE/src/assets/logo.png?raw=true" alt="ShortenURL Logo" style="width: 40px; height: 40px; border-radius: 8px">
+              <h3 style="margin: 0">ShortenURL</h3>
+            </div>
+            <p>High-performance URL redirection service with analytics tracking.</p>
+            <div class="tags"><span class="tag">TypeScript</span><span class="tag">Express</span><span class="tag">MongoDB</span></div>
+            <div class="links"><a class="btn" href="https://github.com/hoangvhgch220975/ShortenURL" target="_blank" rel="noreferrer">GitHub</a></div>
+          </article>
+
+          <article class="panel">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem">
+              <img src="https://github.com/hoangvhgch220975/EduQuery/blob/main/image/qa-logo-1080-x-540.png?raw=true" alt="EduQuery Logo" style="width: 40px; height: 40px; border-radius: 8px; object-fit: cover">
+              <h3 style="margin: 0">EduQuery</h3>
+            </div>
+            <p>Academic Q&A platform for student collaboration and knowledge sharing.</p>
+            <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Web</span></div>
+            <div class="links"><a class="btn" href="https://github.com/hoangvhgch220975/EduQuery" target="_blank" rel="noreferrer">GitHub</a></div>
+          </article>
+
+          <article class="panel">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem">
+              <img src="https://github.com/hoangvhgch220975/SmartStore/blob/main/client/src/assets/smartshop-high-resolution-logo.png?raw=true" alt="SmartStore Logo" style="width: 40px; height: 40px; border-radius: 8px; object-fit: cover">
+              <h3 style="margin: 0">SmartStore</h3>
+            </div>
+            <p>Inventory and sales management system for SMEs. CRUD-heavy with reporting.</p>
+            <div class="tags"><span class="tag">C# / .NET</span><span class="tag">SQL Server</span><span class="tag">Admin UI</span></div>
+            <div class="links"><a class="btn" href="https://github.com/hoangvhgch220975/SmartStore" target="_blank" rel="noreferrer">GitHub</a></div>
+          </article>
+
+          <article class="panel">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem">
+              <img src="https://github.com/hoangvhgch220975/M-Hike-App/blob/main/lib/assets/images/hike_logo.png?raw=true" alt="M-Hike Logo" style="width: 40px; height: 40px; border-radius: 8px">
+              <h3 style="margin: 0">M-Hike App</h3>
+            </div>
+            <p>Cross-platform hiking companion with offline map support.</p>
+            <div class="tags"><span class="tag">React Native</span><span class="tag">SQLite</span><span class="tag">UX Design</span></div>
+            <div class="links"><a class="btn" href="https://github.com/hoangvhgch220975/M-Hike-App" target="_blank" rel="noreferrer">GitHub</a></div>
+          </article>
+
+
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-title">
+          <span class="chapter-num">04 / TECHNICAL STACK</span>
+          <h2>The Arsenal</h2>
+          <p>A stack optimized for performance, scalability, and developer experience.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <h3>Frontend Mastery</h3>
+            <p>Building responsive, accessible, and high-performance interfaces using modern frameworks.</p>
+            <div class="tags">
+              <span class="tag">React / Next.js</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Tailwind / Modern CSS</span>
+              <span class="tag">Framer Motion</span>
+              <span class="tag">State Management (Redux/Zustand)</span>
+            </div>
+          </div>
+          <div class="panel">
+            <h3>Backend & Infrastructure</h3>
+            <p>Designing robust APIs, managing distributed systems, and ensuring data integrity.</p>
+            <div class="tags">
+              <span class="tag">Node.js / Express</span>
+              <span class="tag">C# / ASP.NET Core</span>
+              <span class="tag">Redis / WebSockets</span>
+              <span class="tag">Docker / CI/CD</span>
+              <span class="tag">SQL / NoSQL Patterns</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-title">
+          <span class="chapter-num">05 / GET IN TOUCH</span>
+          <h2>Connect</h2>
+          <p>I am currently available for Full Stack internship opportunities starting in 2026.</p>
+        </div>
+
+        <div class="contact">
+          <div class="panel">
+            <h3>Connect</h3>
+            <p class="note">Direct communication is preferred for technical discussions and inquiries.</p>
+            <div class="links">
+              <a class="btn primary" href="https://www.linkedin.com/in/vu-hong-hoang-fgw-hn-b40768293/" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a class="btn" href="https://github.com/hoangvhgch220975" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+            <div style="margin-top: 2rem">
+              <label>Official Email</label>
+              <p style="font-weight: 700; font-size: 1.1rem; color: var(--text)">ptahoangvu2k4@gmail.com</p>
+            </div>
+          </div>
+
+          <form class="panel" id="contact-form">
+            <div class="field">
+              <label for="from_name">Name</label>
+              <input id="from_name" name="from_name" placeholder="Your full name" autocomplete="name" required />
+            </div>
+
+            <div class="field">
+              <label for="reply_to">Email</label>
+              <input id="reply_to" name="reply_to" placeholder="you@company.com" autocomplete="email" required />
+            </div>
+
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Briefly describe the project or role..." required></textarea>
+            </div>
+
+            <button class="btn primary" type="submit" id="send-btn" style="width: 100%">Send Message</button>
+            <p class="note" id="form-note" style="margin-top: 1rem; text-align: center"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  <footer>
+    <div class="container">
+      <div class="foot">
+        <div>
+          <strong style="color:var(--text); font-size: 1.1rem">Vũ Hồng Hoàng</strong>
+          <p style="margin-top: 0.25rem">Full Stack Developer · Class of 2026</p>
+        </div>
+        <div style="display:flex; gap: 1.5rem">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div style="color: var(--muted); font-size: 0.85rem">
+          &copy; <span id="year"></span> Crafted with Precision
+        </div>
+      </div>
+    </div>
+  </footer>
+  </main>
+
+  <!-- EmailJS SDK (v4) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <script>
+    // ===== CONFIG & INIT =====
+    emailjs.init({
+      publicKey: "mZJiHRIYclaK14awO",
+    });
+
+    const EMAILJS_SERVICE_ID = "service_7dl0kgf";
+    const EMAILJS_TEMPLATE_ID = "template_kxbn9rm";
+
+    // Mobile drawer toggle
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('mobile-drawer');
+
+    hamburger?.addEventListener('click', () => {
+      drawer.classList.toggle('open');
+    });
+
+    drawer?.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        drawer.classList.remove('open');
+      });
+    });
+
+    // Intersection Observer for Chapters
+    const sections = document.querySelectorAll('section');
+    const chapterLinks = document.querySelectorAll('.chapter-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          const id = entry.target.getAttribute('id');
+          chapterLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+
+    sections.forEach(section => observer.observe(section));
+
+    // Contact Form Logic
+    const form = document.getElementById('contact-form');
+    const note = document.getElementById('form-note');
+    const sendBtn = document.getElementById('send-btn');
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!sendBtn) return;
+      
+      note.textContent = "";
+      note.className = "note";
+      sendBtn.disabled = true;
+      sendBtn.textContent = "Sending...";
+
+      emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, '#contact-form', {
+          publicKey: 'mZJiHRIYclaK14awO'
+        })
+        .then(() => {
+          note.textContent = "Sent successfully. Thank you for reaching out!";
+          note.classList.add("ok");
+          form.reset();
+        })
+        .catch((err) => {
+          console.error("EmailJS error:", err);
+          note.textContent = "Failed to send: " + (err.text || "Check console (Error " + err.status + ")");
+          note.classList.add("err");
+        })
+        .finally(() => {
+          sendBtn.disabled = false;
+          sendBtn.textContent = "Send Message";
+        });
+    });
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
