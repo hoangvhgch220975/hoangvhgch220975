@@ -1,7 +1,7 @@
 <div align="center">
 
 # 👋 Hi there, I'm Vũ Hồng Hoàng
-### Full Stack Developer | Class of 2026 @ Greenwich University
+### Full Stack Developer | Graduated of 2026 @ Greenwich University
 
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=hoangvhgch220975&label=PROFILE%20VIEWS&color=7c4dff&style=flat-square" alt="hoangvhgch220975" />
